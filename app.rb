@@ -1,6 +1,9 @@
 require 'bundler/setup'
 require 'sinatra'
 require 'multi_json'
+require 'redis'
+
+$redis = Redis.new
 
 post '/activity' do
   json = MultiJson.load(request.body.read, symbolize_keys: true)
@@ -24,4 +27,5 @@ post '/activity' do
               "#{username} #{highlight} to the #{story_type} \"#{story_name}\". See: #{url}"
             end
 
+  $redis.publish("activity/#{project_id}_#{project_name}", message)
 end
