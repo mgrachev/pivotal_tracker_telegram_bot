@@ -16,6 +16,10 @@ gem 'thin'
 # https://github.com/intridea/multi_json
 gem 'multi_json'
 
+# A Ruby client library for Redis
+# https://github.com/redis/redis-rb
+gem 'redis'
+
 # Ruby wrapper for Telegram's Bot API
 # https://github.com/atipugin/telegram-bot-ruby
 gem 'telegram-bot-ruby'
