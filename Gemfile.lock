@@ -7,10 +7,12 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
+    daemons (1.2.3)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     dotenv (2.0.2)
     equalizer (0.0.11)
+    eventmachine (1.0.8)
     gene_pool (1.4.1)
       thread_safe
     httmultiparty (0.3.16)
@@ -30,11 +32,23 @@ GEM
     persistent_httparty (0.1.2)
       httparty (~> 0.9)
       persistent_http (< 2)
+    rack (1.6.4)
+    rack-protection (1.5.3)
+      rack
+    sinatra (1.4.6)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
     telegram-bot-ruby (0.3.1)
       httmultiparty
       persistent_httparty
       virtus
+    thin (1.6.3)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0)
+      rack (~> 1.0)
     thread_safe (0.3.5)
+    tilt (2.0.1)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -46,7 +60,9 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv
+  sinatra
   telegram-bot-ruby
+  thin
 
 BUNDLED WITH
    1.10.6
