@@ -1,9 +1,6 @@
-require 'bundler/setup'
+require_relative 'main'
 require 'sinatra'
 require 'multi_json'
-require 'redis'
-
-$redis = Redis.new
 
 post '/activity' do
   json = MultiJson.load(request.body.read, symbolize_keys: true)

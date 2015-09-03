@@ -1,10 +1,5 @@
-require 'bundler/setup'
-require 'dotenv'
+require_relative 'main'
 require 'telegram/bot'
-require 'redis'
-
-Dotenv.load
-$redis = Redis.new
 
 bot_name = 'Pivotal Tracker Bot'.freeze
 bot_help = <<-HELP
