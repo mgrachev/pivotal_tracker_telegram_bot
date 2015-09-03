@@ -6,6 +6,8 @@ bot_help = <<-HELP
   Initially, the need to integrate the bot with pivotal tracker.
   See: https://github.com/mgrachev/pivotal_tracker_telegram_bot
 
+  Support: support@mgrachev.com
+
   Available commands:
 
   /start  - Start a #{bot_name}

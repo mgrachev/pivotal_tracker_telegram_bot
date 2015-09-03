@@ -2,6 +2,9 @@ require_relative 'main'
 require 'sinatra'
 require 'multi_json'
 
+set :environment, :production
+set :port, 4567
+
 post '/activity' do
   json = MultiJson.load(request.body.read, symbolize_keys: true)
 
