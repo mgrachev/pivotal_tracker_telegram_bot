@@ -22,7 +22,9 @@ post '/activity' do
               "#{username} #{highlight} #{story_type} \"#{story_name}\". See: #{url}"
             when 'comment_create_activity'
               "#{username} #{highlight} to the #{story_type} \"#{story_name}\". See: #{url}"
+            else
+              ''
             end
 
-  $redis.publish("pivotal_tracker_bot/activity/#{project_id}_#{project_name}", message)
+  $redis.publish("pivotal_tracker_bot/activity/#{project_id}_#{project_name}", message) if message != ''
 end

@@ -1,6 +1,9 @@
 require_relative 'main'
 require 'telegram/bot'
 
+other_redis = Redis.new
+bot = Telegram::Bot::Client.new(ENV['TOKEN'])
+
 $redis.psubscribe 'pivotal_tracker_bot/activity/*' do |on|
   on.psubscribe do |channel, subscriptions|
     puts "Subscribed to ##{channel} (#{subscriptions} subscriptions)"
@@ -10,11 +13,8 @@ $redis.psubscribe 'pivotal_tracker_bot/activity/*' do |on|
     project_key = channel.split('/')[2]
     redis_key = "pivotal_tracker_bot/chat_id/#{project_key}"
 
-    redis2 = Redis.new
-    if redis2.exists(redis_key)
-      chat_id = redis2.get(redis_key)
-
-      bot = Telegram::Bot::Client.new(ENV['TOKEN'])
+    if other_redis.exists(redis_key)
+      chat_id = other_redis.get(redis_key)
       bot.api.sendMessage(chat_id: chat_id, text: message)
     end
   end

@@ -21,6 +21,7 @@ Telegram::Bot::Client.run(ENV['TOKEN']) do |bot|
     case message.text
     when '/start'
       bot.api.sendMessage(chat_id: message.chat.id, text: "Hello! I'm #{bot_name}")
+    # TODO: Disable tracking multiple projects
     when /^\/track/
       args = message.text.split(' ')
 
@@ -36,7 +37,14 @@ Telegram::Bot::Client.run(ENV['TOKEN']) do |bot|
 
       bot.api.sendMessage(chat_id: message.chat.id, text: "Start tracking project #{project_name}")
     when '/stop'
-      project_key   = $redis.get("pivotal_tracker_bot/project_key/#{message.chat.id}")
+      redis_key = "pivotal_tracker_bot/project_key/#{message.chat.id}"
+
+      unless $redis.exists(redis_key)
+        bot.api.sendMessage(chat_id: message.chat.id, text: 'No track projects')
+        next
+      end
+
+      project_key   = $redis.get(redis_key)
       project_name  = project_key.split('_')[1]
 
       $redis.del("pivotal_tracker_bot/chat_id/#{project_key}")
