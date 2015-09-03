@@ -39,13 +39,15 @@ Telegram::Bot::Client.run(ENV['TOKEN']) do |bot|
       # To stop tracking
       $redis.set("pivotal_tracker_bot/project_key/#{message.chat.id}", "#{project_id}_#{project_name}")
 
-      bot.api.sendMessage(chat_id: message.chat.id, text: "Start tracking project #{@project_name}")
+      bot.api.sendMessage(chat_id: message.chat.id, text: "Start tracking project #{project_name}")
     when '/stop'
-      project_key = $redis.get("pivotal_tracker_bot/project_key/#{message.chat.id}")
+      project_key   = $redis.get("pivotal_tracker_bot/project_key/#{message.chat.id}")
+      project_name  = project_key.split('_')[1]
+
       $redis.del("pivotal_tracker_bot/chat_id/#{project_key}")
       $redis.del("pivotal_tracker_bot/project_key/#{message.chat.id}")
 
-      bot.api.sendMessage(chat_id: message.chat.id, text: 'Stop tracking project')
+      bot.api.sendMessage(chat_id: message.chat.id, text: "Stop tracking project #{project_name}")
     when '/help'
       bot.api.sendMessage(chat_id: message.chat.id, text: bot_help)
     end
