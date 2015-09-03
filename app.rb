@@ -17,7 +17,7 @@ post '/activity' do
   message = case json[:kind]
             when 'story_create_activity'
               "#{username} #{highlight} new #{story_type} \"#{story_name}\". See: #{url}"
-            when 'story_update_activity'
+            when 'story_update_activity', 'story_delete_activity'
               return if highlight == 'estimated'
               "#{username} #{highlight} #{story_type} \"#{story_name}\". See: #{url}"
             when 'comment_create_activity'
