@@ -1,8 +1,10 @@
 require 'bundler/setup'
 require 'dotenv'
 require 'telegram/bot'
+require 'redis'
 
 Dotenv.load
+$redis = Redis.new
 
 bot_name = 'Pivotal Tracker Bot'.freeze
 bot_help = <<-HELP
@@ -32,12 +34,17 @@ Telegram::Bot::Client.run(ENV['TOKEN']) do |bot|
         next
       end
 
-      # Add chat_id to redis
-      # project_id, project_name = args[1..-1]
+      project_id, project_name = args[1..-1]
+      $redis.set("pivotal_tracker_bot/chat_id/#{project_id}_#{project_name}", message.chat.id)
+      # To stop tracking
+      $redis.set("pivotal_tracker_bot/project_key/#{message.chat.id}", "#{project_id}_#{project_name}")
 
       bot.api.sendMessage(chat_id: message.chat.id, text: "Start tracking project #{@project_name}")
     when '/stop'
-      @project_id, @project_name = nil
+      project_key = $redis.get("pivotal_tracker_bot/project_key/#{message.chat.id}")
+      $redis.del("pivotal_tracker_bot/chat_id/#{project_key}")
+      $redis.del("pivotal_tracker_bot/project_key/#{message.chat.id}")
+
       bot.api.sendMessage(chat_id: message.chat.id, text: 'Stop tracking project')
     when '/help'
       bot.api.sendMessage(chat_id: message.chat.id, text: bot_help)

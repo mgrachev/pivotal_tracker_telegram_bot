@@ -27,5 +27,5 @@ post '/activity' do
               "#{username} #{highlight} to the #{story_type} \"#{story_name}\". See: #{url}"
             end
 
-  $redis.publish("activity/#{project_id}_#{project_name}", message)
+  $redis.publish("pivotal_tracker_bot/activity/#{project_id}_#{project_name}", message)
 end
