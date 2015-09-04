@@ -15,7 +15,7 @@ $redis.psubscribe 'pivotal_tracker_bot/activity/*' do |on|
 
     if other_redis.exists(redis_key)
       chat_id = other_redis.get(redis_key)
-      bot.api.sendMessage(chat_id: chat_id, text: message)
+      bot.api.sendMessage(chat_id: chat_id, text: message, disable_web_page_preview: true)
     end
   end
 end
