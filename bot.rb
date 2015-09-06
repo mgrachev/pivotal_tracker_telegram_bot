@@ -1,5 +1,4 @@
 require_relative 'main'
-require 'telegram/bot'
 
 bot_name = 'Pivotal Tracker Bot'.freeze
 bot_help = <<-HELP
@@ -16,10 +15,10 @@ bot_help = <<-HELP
   /help   - Show hint
 HELP
 
-track_argument_error = 'You must specify the project ID and Project Name.\n Example: /track 1234 Ruby'
+track_argument_error = "You must specify the project ID and Project Name.\n Example: /track 1234 Ruby"
 
 begin
-  Telegram::Bot::Client.run(ENV['TOKEN'], logger: $bot_logger) do |bot|
+  $telegram_bot.run do |bot|
     bot.listen do |message|
       case message.text
         when '/start'

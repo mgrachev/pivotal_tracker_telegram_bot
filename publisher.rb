@@ -1,8 +1,6 @@
 require_relative 'main'
-require 'telegram/bot'
 
 other_redis = Redis.new
-bot = Telegram::Bot::Client.new(ENV['TOKEN'], logger: $bot_logger)
 
 begin
   $redis.psubscribe 'pivotal_tracker_bot/activity/*' do |on|
@@ -17,7 +15,7 @@ begin
 
       if other_redis.exists(redis_key)
         chat_id = other_redis.get(redis_key)
-        bot.api.sendMessage(chat_id: chat_id, text: message, disable_web_page_preview: true)
+        $telegram_bot.api.sendMessage(chat_id: chat_id, text: message, disable_web_page_preview: true)
       end
     end
   end
