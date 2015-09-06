@@ -23,3 +23,7 @@ gem 'redis'
 # Ruby wrapper for Telegram's Bot API
 # https://github.com/atipugin/telegram-bot-ruby
 gem 'telegram-bot-ruby'
+
+# Really fast deployer and server automation tool
+# https://github.com/mina-deploy/mina
+gem 'mina'
