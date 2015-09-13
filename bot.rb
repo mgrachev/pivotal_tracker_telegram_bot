@@ -21,9 +21,6 @@ fork do
   begin
     $telegram_bot.run do |bot|
       bot.listen do |message|
-
-        $bot_logger.info("#{message.chat.id} => #{message}")
-
         case message.text
           when '/start'
             bot.api.sendMessage(chat_id: message.chat.id, text: "Hello! I'm #{bot_name}")
