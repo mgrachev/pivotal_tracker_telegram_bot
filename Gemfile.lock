@@ -15,6 +15,7 @@ GEM
     eventmachine (1.0.8)
     gene_pool (1.4.1)
       thread_safe
+    god (0.13.6)
     httmultiparty (0.3.16)
       httparty (>= 0.7.3)
       mimemagic
@@ -67,6 +68,7 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv
+  god
   mina
   multi_json
   redis

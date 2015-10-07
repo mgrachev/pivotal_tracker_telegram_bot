@@ -27,3 +27,7 @@ gem 'telegram-bot-ruby'
 # Really fast deployer and server automation tool
 # https://github.com/mina-deploy/mina
 gem 'mina'
+
+# Ruby process monitor
+# https://github.com/mojombo/god
+gem 'god'
