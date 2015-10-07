@@ -26,3 +26,4 @@ end
 
 require_relative 'pivotal_tracker/app'
 require_relative 'pivotal_tracker/bot'
+require_relative 'pivotal_tracker/publisher'
