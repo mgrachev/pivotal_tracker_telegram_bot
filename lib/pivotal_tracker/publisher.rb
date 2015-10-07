@@ -20,7 +20,7 @@ module PivotalTracker
           end
         end
       rescue => error
-        logger.fatal("Publisher -- Exception : #{error}")
+        logger.fatal("Publisher -- Exception : #{error.message}\n#{error.backtrace.join("\n")}")
       end
 
       def redis_instance

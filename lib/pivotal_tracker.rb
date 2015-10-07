@@ -1,10 +1,7 @@
 require 'bundler/setup'
-require 'dotenv'
 require 'redis'
 require 'logger'
 require 'telegram/bot'
-
-Dotenv.load
 
 module PivotalTracker
   class Base
@@ -13,12 +10,12 @@ module PivotalTracker
       $redis ||= Redis.new(timeout: 0)
     end
 
-    def self.telegram_bot
-      $telegram_bot ||= Telegram::Bot::Client.new(ENV['TOKEN'], logger: $bot_logger)
+    def self.logger
+      $logger ||= Logger.new(File.expand_path('../../log/pivotal_tracker_bot.log', __FILE__), 'weekly')
     end
 
-    def self.logger
-      $logger ||= Logger.new(File.expand_path('../log/pivotal_tracker_bot.log', __FILE__), 'weekly')
+    def self.telegram_bot
+      $telegram_bot ||= Telegram::Bot::Client.new(ENV['TOKEN'], logger: logger)
     end
 
   end

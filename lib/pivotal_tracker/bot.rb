@@ -60,7 +60,7 @@ module PivotalTracker
         end
       end
     rescue => error
-      logger.fatal("Bot -- Exception : #{error}")
+      logger.fatal("Bot -- Exception : #{error.message}\n#{error.backtrace.join("\n")}")
     end
 
   end
