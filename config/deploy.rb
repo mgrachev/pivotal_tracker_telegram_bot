@@ -63,8 +63,10 @@ task :deploy => :environment do
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
-      queue "ruby #{deploy_to}/#{current_path}/bot.rb"
-      queue "ruby #{deploy_to}/#{current_path}/publisher.rb"
+      queue "bundle exec god -c #{deploy_to}/#{current_path}/main.god"
+      queue "bundle exec god load #{deploy_to}/#{current_path}/main.god"
+      queue 'bundle exec god restart bot'
+      queue 'bundle exec god restart publisher'
     end
   end
 end
