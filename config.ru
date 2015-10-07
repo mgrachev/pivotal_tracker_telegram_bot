@@ -1,6 +1,3 @@
-require 'bundler/setup'
-require 'sinatra'
+require_relative 'lib/pivotal_tracker'
 
-require_relative 'app'
-
-run Sinatra::Application
+run PivotalTracker::App
