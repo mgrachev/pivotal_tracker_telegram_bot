@@ -7,7 +7,7 @@ require 'mina/git'
 require 'mina/rbenv'
 
 set :domain, ENV['MINA_DOMAIN']
-set :deploy_to, ENV['MINA_DEPLOY_to']
+set :deploy_to, ENV['MINA_DEPLOY_TO']
 set :repository, 'git@github.com:mgrachev/pivotal_tracker_telegram_bot.git'
 set :branch, 'master'
 
