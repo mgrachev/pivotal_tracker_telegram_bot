@@ -2,12 +2,12 @@
 
 Tracked events:
 
-* Create a new story
-* Change a story
-* Change a status of story
-* Delete a story
-* Add a new comment to the story
-* Create a new epic
+* Create a new story;
+* Change a story;
+* Change a status of story;
+* Delete a story;
+* Add a new comment to the story;
+* Create a new epic.
 
 ## Usage
 
