@@ -5,7 +5,6 @@ require 'telegram/bot'
 
 module PivotalTracker
   class Base
-
     def self.redis
       $redis ||= Redis.new(timeout: 0)
     end
@@ -17,7 +16,6 @@ module PivotalTracker
     def self.telegram_bot
       $telegram_bot ||= Telegram::Bot::Client.new(ENV['TOKEN'], logger: logger)
     end
-
   end
 end
 

@@ -30,23 +30,23 @@ end
 # Put any custom mkdir's in here for when `mina setup` is ran.
 # For Rails apps, we'll make some of the shared paths that are shared between
 # all releases.
-task :setup => :environment do
-  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
+task setup: :environment do
+  queue! %(mkdir -p "#{deploy_to}/#{shared_path}/log")
+  queue! %(chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log")
 
-  queue! %[touch "#{deploy_to}/#{shared_path}/.env"]
-  queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/.env'."]
+  queue! %(touch "#{deploy_to}/#{shared_path}/.env")
+  queue %(echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/.env'.")
 
-  queue %[
+  queue %(
     repo_host=`echo $repo | sed -e 's/.*@//g' -e 's/:.*//g'` &&
     repo_port=`echo $repo | grep -o ':[0-9]*' | sed -e 's/://g'` &&
     if [ -z "${repo_port}" ]; then repo_port=22; fi &&
     ssh-keyscan -p $repo_port -H $repo_host >> ~/.ssh/known_hosts
-  ]
+  )
 end
 
 desc 'Deploys the current version to the server.'
-task :deploy => :environment do
+task deploy: :environment do
   to :before_hook do
     # Put things to run locally before ssh
   end

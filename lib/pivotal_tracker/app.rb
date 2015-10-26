@@ -16,18 +16,18 @@ module PivotalTracker
       url               = primary_resource[:url]
 
       message = case json[:kind]
-                  when 'story_create_activity'
-                    "#{username} #{highlight} new #{story_type} \"#{story_name}\". See: #{url}"
-                  when 'story_update_activity', 'story_delete_activity'
-                    return if highlight == 'estimated'
-                    "#{username} #{highlight} #{story_type} \"#{story_name}\". See: #{url}"
-                  when 'comment_create_activity'
-                    "#{username} #{highlight} to the #{story_type} \"#{story_name}\". See: #{url}"
-                  when 'epic_create_activity'
-                    "#{username} #{highlight} new #{primary_resource[:kind]} \"#{story_name}\". See: #{url}"
-                  else
-                    PivotalTracker::Base.info("App -- Undefined kind : #{json}")
-                    return
+                when 'story_create_activity'
+                  "#{username} #{highlight} new #{story_type} \"#{story_name}\". See: #{url}"
+                when 'story_update_activity', 'story_delete_activity'
+                  return if highlight == 'estimated'
+                  "#{username} #{highlight} #{story_type} \"#{story_name}\". See: #{url}"
+                when 'comment_create_activity'
+                  "#{username} #{highlight} to the #{story_type} \"#{story_name}\". See: #{url}"
+                when 'epic_create_activity'
+                  "#{username} #{highlight} new #{primary_resource[:kind]} \"#{story_name}\". See: #{url}"
+                else
+                  PivotalTracker::Base.info("App -- Undefined kind : #{json}")
+                  return
                 end
 
       PivotalTracker::Base.redis.publish("pivotal_tracker_bot/activity/#{project_id}_#{project_name}", message) if message != ''

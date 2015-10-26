@@ -1,7 +1,6 @@
 module PivotalTracker
   class Publisher < Base
     class << self
-
       def run
         redis.psubscribe 'pivotal_tracker_bot/activity/*' do |on|
           on.psubscribe do |channel, _|
@@ -26,7 +25,6 @@ module PivotalTracker
       def redis_instance
         @redis_instance ||= Redis.new
       end
-
     end
   end
 end
