@@ -31,3 +31,7 @@ gem 'mina'
 # Ruby process monitor
 # https://github.com/mojombo/god
 gem 'god'
+
+# A Ruby static code analyzer, based on the community Ruby style guide
+# Read more: https://github.com/bbatsov/rubocop
+gem 'rubocop', require: false
