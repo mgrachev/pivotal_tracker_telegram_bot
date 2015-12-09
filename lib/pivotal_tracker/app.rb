@@ -26,7 +26,7 @@ module PivotalTracker
                 when 'epic_create_activity'
                   "#{username} #{highlight} new #{primary_resource[:kind]} \"#{story_name}\". See: #{url}"
                 else
-                  PivotalTracker::Base.info("App -- Undefined kind : #{json}")
+                  PivotalTracker::Base.logger.info("App -- Undefined kind : #{json}")
                   return
                 end
 
