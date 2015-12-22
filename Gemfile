@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.2.3'
 
 # Loads environment variables from `.env`
 # https://github.com/bkeepers/dotenv
