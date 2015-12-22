@@ -17,14 +17,14 @@ module PivotalTracker
 
       message = case json[:kind]
                 when 'story_create_activity'
-                  "#{username} #{highlight} new #{story_type} \"#{story_name}\". See: #{url}"
+                  "[#{project_name}] #{username} #{highlight} new #{story_type} \"#{story_name}\". See: #{url}"
                 when 'story_update_activity', 'story_delete_activity'
                   return if highlight == 'estimated'
-                  "#{username} #{highlight} #{story_type} \"#{story_name}\". See: #{url}"
+                  "[#{project_name}] #{username} #{highlight} #{story_type} \"#{story_name}\". See: #{url}"
                 when 'comment_create_activity'
-                  "#{username} #{highlight} to the #{story_type} \"#{story_name}\". See: #{url}"
+                  "[#{project_name}] #{username} #{highlight} to the #{story_type} \"#{story_name}\". See: #{url}"
                 when 'epic_create_activity'
-                  "#{username} #{highlight} new #{primary_resource[:kind]} \"#{story_name}\". See: #{url}"
+                  "[#{project_name}] #{username} #{highlight} new #{primary_resource[:kind]} \"#{story_name}\". See: #{url}"
                 else
                   PivotalTracker::Base.logger.info("App -- Undefined kind : #{json}")
                   return
