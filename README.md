@@ -11,7 +11,7 @@ Tracked events:
 
 ## Usage
 
-1. Add the Activity Web Hook v5 in [Pivotal Tracker](http://pivotaltracker.com) - http://pivotaltrackerbot.mgrachev.com/activity
+1. Add the Activity Web Hook v5 in [Pivotal Tracker](http://pivotaltracker.com) - http://pivotalbot.mgrachev.com/activity
 
 2. Activate the bot [@PivotalTrackerBot](http://telegram.me/PivotalTrackerBot) 
 

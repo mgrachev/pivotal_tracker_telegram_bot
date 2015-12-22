@@ -9,10 +9,6 @@ gem 'dotenv'
 # https://github.com/sinatra/sinatra
 gem 'sinatra'
 
-# A very fast & simple Ruby web server
-# https://github.com/macournoyer/thin/
-gem 'thin'
-
 # A generic swappable back-end for JSON handling
 # https://github.com/intridea/multi_json
 gem 'multi_json'
