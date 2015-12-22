@@ -21,7 +21,7 @@ module PivotalTracker
       telegram_bot.run do |bot|
         bot.listen do |message|
           case message.text
-          when '/start'
+          when %r{^\/start}
             bot.api.sendMessage(chat_id: message.chat.id, text: "Hello! I'm #{NAME}")
           # TODO: Disable tracking multiple projects
           when %r{^\/track}
@@ -38,7 +38,7 @@ module PivotalTracker
             redis.set("pivotal_tracker_bot/project_key/#{message.chat.id}", "#{project_id}_#{project_name}")
 
             bot.api.sendMessage(chat_id: message.chat.id, text: "Start tracking project #{project_name}")
-          when '/stop'
+          when %r{^\/stop}
             redis_key = "pivotal_tracker_bot/project_key/#{message.chat.id}"
 
             unless redis.exists(redis_key)
@@ -53,7 +53,7 @@ module PivotalTracker
             redis.del("pivotal_tracker_bot/project_key/#{message.chat.id}")
 
             bot.api.sendMessage(chat_id: message.chat.id, text: "Stop tracking project #{project_name}")
-          when '/help'
+          when %r{^\/help}
             bot.api.sendMessage(chat_id: message.chat.id, text: HELP)
           end
         end
