@@ -2,7 +2,7 @@ module PivotalTracker
   class Publisher < Base
     class << self
       def run
-        redis.psubscribe 'pivotal_tracker_bot/activity/*' do |on|
+        redis.psubscribe "#{NAME}/activity/*" do |on|
           on.psubscribe do |channel, _|
             logger.info "Publisher -- Subscribed to ##{channel}"
           end
@@ -10,7 +10,7 @@ module PivotalTracker
           on.pmessage do |_, channel, message|
             logger.info "Publisher -- Message received \"#{message}\" from the channel ##{channel}"
             project_key = channel.split('/')[2]
-            redis_key = "pivotal_tracker_bot/chat_id/#{project_key}"
+            redis_key = "#{NAME}/chat_id/#{project_key}"
 
             if redis_instance.exists(redis_key)
               chat_id = redis_instance.get(redis_key)

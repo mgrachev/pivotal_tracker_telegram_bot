@@ -14,23 +14,27 @@ module PivotalTracker
       story_type        = primary_resource[:story_type]
       story_name        = primary_resource[:name]
       url               = primary_resource[:url]
+      who_did_it        = "[#{project_name}] #{username} #{highlight}"
 
       message = case json[:kind]
                 when 'story_create_activity'
-                  "[#{project_name}] #{username} #{highlight} new #{story_type} \"#{story_name}\". See: #{url}"
+                  "#{who_did_it} new #{story_type} \"#{story_name}\". See: #{url}"
                 when 'story_update_activity', 'story_delete_activity'
                   return if highlight == 'estimated'
-                  "[#{project_name}] #{username} #{highlight} #{story_type} \"#{story_name}\". See: #{url}"
+                  "#{who_did_it} #{story_type} \"#{story_name}\". See: #{url}"
                 when 'comment_create_activity'
-                  "[#{project_name}] #{username} #{highlight} to the #{story_type} \"#{story_name}\". See: #{url}"
+                  "#{who_did_it} to the #{story_type} \"#{story_name}\". See: #{url}"
                 when 'epic_create_activity'
-                  "[#{project_name}] #{username} #{highlight} new #{primary_resource[:kind]} \"#{story_name}\". See: #{url}"
+                  "#{who_did_it} new #{primary_resource[:kind]} \"#{story_name}\". See: #{url}"
                 else
                   PivotalTracker::Base.logger.info("App -- Undefined kind : #{json}")
                   return
                 end
 
-      PivotalTracker::Base.redis.publish("pivotal_tracker_bot/activity/#{project_id}_#{project_name}", message) if message != ''
+      if message != ''
+        project_key = "#{project_id}_#{project_name.tr(' ', '_')}"
+        PivotalTracker::Base.redis.publish("#{PivotalTracker::Base::NAME}/activity/#{project_key}", message)
+      end
 
       204
     end

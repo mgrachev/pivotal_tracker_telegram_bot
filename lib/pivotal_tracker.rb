@@ -5,12 +5,14 @@ require 'telegram/bot'
 
 module PivotalTracker
   class Base
+    NAME = 'pivotal_tracker_bot'.freeze
+
     def self.redis
       $redis ||= Redis.new(timeout: 0)
     end
 
     def self.logger
-      $logger ||= Logger.new(File.expand_path('../../log/pivotal_tracker_bot.log', __FILE__), 'weekly')
+      $logger ||= Logger.new(File.expand_path("../../log/#{NAME}.log", __FILE__), 'weekly')
     end
 
     def self.telegram_bot

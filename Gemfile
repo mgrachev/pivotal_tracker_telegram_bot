@@ -32,3 +32,7 @@ gem 'god'
 # A Ruby static code analyzer, based on the community Ruby style guide
 # Read more: https://github.com/bbatsov/rubocop
 gem 'rubocop', require: false
+
+# A very fast & simple Ruby web server
+# https://github.com/macournoyer/thin/
+gem 'thin'
