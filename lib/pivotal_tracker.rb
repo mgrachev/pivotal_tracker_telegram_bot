@@ -3,6 +3,9 @@ require 'redis'
 require 'logger'
 require 'telegram/bot'
 
+# require 'dotenv' # Test only
+# Dotenv.load
+
 module PivotalTracker
   class Base
     NAME = 'pivotal_tracker_bot'.freeze
