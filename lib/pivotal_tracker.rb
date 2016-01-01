@@ -3,9 +3,9 @@ require 'redis'
 require 'logger'
 require 'telegram/bot'
 require 'airbrake'
-require 'dotenv'
 
-Dotenv.load
+# require 'dotenv' # Test only
+# Dotenv.load
 
 Airbrake.configure do |config|
   config.api_key = ENV['AIRBRAKE_KEY']

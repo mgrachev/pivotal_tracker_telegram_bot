@@ -25,6 +25,10 @@ gem 'telegram-bot-ruby'
 # https://github.com/mina-deploy/mina
 gem 'mina'
 
+# Ruby process monitor
+# https://github.com/mojombo/god
+gem 'god'
+
 # A Ruby static code analyzer, based on the community Ruby style guide
 # Read more: https://github.com/bbatsov/rubocop
 gem 'rubocop', require: false
@@ -36,7 +40,3 @@ gem 'thin'
 # The official Airbrake library for Ruby on Rails. Links to other Airbrake libraries are in the ReadMe
 # https://github.com/airbrake/airbrake
 gem 'airbrake', '~> 4.3'
-
-# Manage Procfile-based applications
-# https://github.com/ddollar/foreman
-gem 'foreman'
