@@ -63,10 +63,10 @@ task deploy: :environment do
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
+      queue 'bundle exec god stop bot'
+      queue 'bundle exec god stop publisher'
+      queue 'bundle exec god quit'
       queue "bundle exec god -c #{deploy_to}/#{current_path}/main.god"
-      queue "bundle exec god load #{deploy_to}/#{current_path}/main.god"
-      queue 'bundle exec god restart bot'
-      queue 'bundle exec god restart publisher'
     end
   end
 end
