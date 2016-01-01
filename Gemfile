@@ -36,3 +36,7 @@ gem 'rubocop', require: false
 # A very fast & simple Ruby web server
 # https://github.com/macournoyer/thin/
 gem 'thin'
+
+# The official Airbrake library for Ruby on Rails. Links to other Airbrake libraries are in the ReadMe
+# https://github.com/airbrake/airbrake
+gem 'airbrake', '~> 4.3'

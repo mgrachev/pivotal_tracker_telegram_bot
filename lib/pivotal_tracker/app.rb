@@ -1,8 +1,11 @@
 require 'sinatra/base'
 require 'multi_json'
+require_relative '../pivotal_tracker'
 
 module PivotalTracker
   class App < Sinatra::Base
+    use Airbrake::Sinatra
+
     post '/activity' do
       json = MultiJson.load(request.body.read, symbolize_keys: true)
 

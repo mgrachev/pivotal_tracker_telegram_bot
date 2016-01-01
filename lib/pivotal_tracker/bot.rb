@@ -1,3 +1,5 @@
+require_relative '../pivotal_tracker'
+
 module PivotalTracker
   class Bot < Base
     BOT_NAME = 'Pivotal Tracker Bot'.freeze
@@ -18,10 +20,14 @@ HELP
     TRACK_ONE_PROJECT_IN_FEW_CHATS = "The project is already being tracked in another chat.\nTo track the project in this chat, you must first stop tracking in the other chat."
     STOP_ARGUMENT_ERROR = "You must specify the Project Name.\nExample: /stop My Sample Project".freeze
 
+    class << self
+      attr_reader :chat_id, :project_key, :project_name, :args
+    end
+
     def self.run
       telegram_bot.run do |bot|
         bot.listen do |message|
-          chat_id = message.chat.id
+          @chat_id = message.chat.id
 
           case message.text
           when %r{^\/start}
@@ -29,7 +35,7 @@ HELP
           when %r{^\/help}
             bot.api.sendMessage(chat_id: chat_id, text: HELP, disable_web_page_preview: true)
           when %r{^\/track}
-            args = message.text.split(' ')
+            @args = message.text.split(' ')
 
             if args.length < 3
               bot.api.sendMessage(chat_id: chat_id, text: TRACK_ARGUMENT_ERROR)
@@ -37,8 +43,8 @@ HELP
             end
 
             project_id    = args[1]
-            project_name  = args[2..-1].join('_')
-            project_key   = "#{project_id}_#{project_name}"
+            @project_name = args[2..-1].join('_')
+            @project_key  = "#{project_id}_#{project_name}"
             chat_key      = "#{NAME}/chat_id/#{project_key}"
 
             if redis.exists(chat_key)
@@ -52,7 +58,7 @@ HELP
 
             bot.api.sendMessage(chat_id: chat_id, text: "Start tracking project \"#{project_name.tr('_', ' ')}\"")
           when %r{^\/stop}
-            args = message.text.split(' ')
+            @args = message.text.split(' ')
             if args.length < 2
               bot.api.sendMessage(chat_id: chat_id, text: STOP_ARGUMENT_ERROR)
               next
@@ -65,7 +71,7 @@ HELP
               next
             end
 
-            project_name = args[1..-1].join('_')
+            @project_name = args[1..-1].join('_')
 
             result = redis.sscan(redis_project_key, 0, match: "*#{project_name}")[1]
 
@@ -74,7 +80,7 @@ HELP
               next
             end
 
-            project_key = result[0]
+            @project_key = result[0]
             redis_chat_key = "#{NAME}/chat_id/#{project_key}"
 
             redis.del(redis_chat_key)
@@ -87,8 +93,20 @@ HELP
           end
         end
       end
-    rescue => error
-      logger.fatal("Bot -- Exception : #{error.message}\n#{error.backtrace.join("\n")}")
+    rescue => e
+      send_to_errbit(e, method: __callee__, command: Regexp.last_match, **airbrake_params)
+      retry
+    end
+
+    private
+
+    def self.airbrake_params
+      {
+        project_key:  project_key,
+        project_name: project_name,
+        chat_id:      chat_id,
+        args:         args
+      }
     end
   end
 end
