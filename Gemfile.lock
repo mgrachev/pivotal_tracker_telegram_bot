@@ -48,7 +48,7 @@ GEM
       httparty (~> 0.9)
       persistent_http (< 2)
     powerpack (0.1.1)
-    rack (1.6.4)
+    rack (1.6.11)
     rack-protection (1.5.3)
       rack
     rainbow (2.0.0)
