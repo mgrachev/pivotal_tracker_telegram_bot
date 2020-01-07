@@ -1,4 +1,4 @@
-# Pivotal Tracker Telegram Bot
+# 💬 Pivotal Tracker Telegram Bot
 
 Tracked events:
 
