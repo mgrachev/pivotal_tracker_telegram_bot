@@ -52,7 +52,7 @@ GEM
     rack-protection (1.5.3)
       rack
     rainbow (2.0.0)
-    rake (10.4.2)
+    rake (13.0.1)
     redis (3.2.1)
     rubocop (0.34.2)
       astrolabe (~> 1.3)
